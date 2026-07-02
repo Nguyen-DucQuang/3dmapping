@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huyền sử Yết Kiêu - 3D Mapping</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #030616;
+      --navy: #070b25;
+      --panel: #090d2a;
+      --pink: #ff0b78;
+      --pink-2: #ff4a9f;
+      --cyan: #1df5ff;
+      --green: #24ff37;
+      --yellow: #ffe24a;
+      --white: #ffffff;
+      --muted: #c8d0e8;
+      --deep: #03040c;
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Be Vietnam Pro", Arial, sans-serif;
+      color: var(--white);
+      background: #000;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .shell {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .neon-rule {
+      height: 4px;
+      background:
+        linear-gradient(90deg,
+          #24ff37 0%,
+          #eaff25 18%,
+          #32ff69 34%,
+          #16f5ff 55%,
+          #ff9c36 75%,
+          #ff0b78 100%);
+      box-shadow:
+        0 0 10px rgba(29, 245, 255, 0.45),
+        0 0 18px rgba(255, 11, 120, 0.24);
+    }
+
+    .wave-white {
+      position: relative;
+      background: #fff;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .wave-white::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image: url("assets/wave-pattern-figma.svg");
+      background-repeat: repeat;
+      background-size: 180px 72px;
+    }
+
+    .site-header {
+      background: linear-gradient(180deg, #05077b 0%, #050731 100%);
+    }
+
+    .nav {
+      min-height: 104px;
+      display: grid;
+      grid-template-columns: 250px 1fr auto;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand .logo-3d {
+      width: 82px;
+      filter: drop-shadow(0 0 10px rgba(29, 245, 255, 0.4));
+    }
+
+    .brand .logo-title {
+      width: 94px;
+      filter: drop-shadow(0 0 10px rgba(255, 11, 120, 0.38));
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 86px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .nav-links a {
+      opacity: 0.92;
+      transition: color 0.18s ease, opacity 0.18s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+      opacity: 1;
+    }
+
+    .nav-action {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .nav-action::before {
+      content: "";
+      width: 1px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.48);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      justify-self: end;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .menu-toggle span,
+    .menu-toggle::before,
+    .menu-toggle::after {
+      content: "";
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-toggle {
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav.is-open .menu-toggle::before {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav.is-open .menu-toggle span {
+      opacity: 0;
+    }
+
+    .nav.is-open .menu-toggle::after {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 34px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--white);
+      background: var(--pink);
+      font-weight: 800;
+      font-size: 16px;
+      box-shadow: 0 10px 32px rgba(255, 11, 120, 0.32);
+      transition: transform 0.18s ease, background 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: #ff2d91;
+    }
+
+    .hero {
+      background: var(--navy);
+      padding: 28px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 292px minmax(0, 1fr);
+      gap: 48px;
+      align-items: center;
+      max-width: 1040px;
+    }
+
+    .hero-poster {
+      width: 258px;
+      justify-self: center;
+      filter: drop-shadow(0 18px 38px rgba(0, 0, 0, 0.46));
+    }
+
+    .hero-copy {
+      min-width: 0;
+    }
+
+    h1 {
+      margin: 0 0 28px;
+      color: var(--pink-2);
+      font-size: 29px;
+      line-height: 1.15;
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-copy h2 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      line-height: 1.55;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .hero-copy p {
+      margin: 0 0 10px;
+      color: #f2f4ff;
+      font-size: 14px;
+      line-height: 1.95;
+      font-weight: 600;
+    }
+
+    .event-meta {
+      display: grid;
+      grid-template-columns: 132px minmax(330px, 1.3fr) minmax(260px, 0.9fr);
+      gap: 0;
+      margin-top: 22px;
+      align-items: stretch;
+    }
+
+    .meta-block {
+      min-width: 0;
+      padding: 0 20px;
+      border-left: 1px solid rgba(255, 255, 255, 0.72);
+      min-height: 108px;
+    }
+
+    .meta-block:first-child {
+      padding-left: 0;
+      border-left: 0;
+      white-space: nowrap;
+    }
+
+    .meta-kicker {
+      display: block;
+      margin-bottom: 7px;
+      color: #f7f8ff;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .meta-strong {
+      display: block;
+      font-size: 20px;
+      line-height: 1.32;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .meta-block:first-child .meta-strong {
+      white-space: nowrap;
+      overflow-wrap: normal;
+    }
+
+    .meta-small {
+      display: block;
+      margin-top: 8px;
+      color: #eef2ff;
+      font-size: 13px;
+      line-height: 1.7;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .meta-block:nth-child(3) .meta-small {
+      margin-top: 0;
+      max-width: 280px;
+    }
+
+    .ticket-strip {
+      background: #fff;
+      color: #11172a;
+      padding: 50px 0 50px;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 296px;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .ticket-title h2 {
+      margin: 0 0 8px;
+      color: #14182b;
+      font-size: clamp(30px, 4.8vw, 48px);
+      line-height: 1.08;
+      font-weight: 800;
+    }
+
+    .ticket-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .outline-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 18px;
+      border: 1px solid #b7b7b7;
+      background: #fff;
+      color: #303546;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .ui-icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      color: #07102c;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .booking-card {
+      border: 1px solid #b9b9b9;
+      padding: 26px 16px 34px;
+      background: #fff;
+    }
+
+    .booking-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      color: #24293a;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .booking-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #6c7181;
+      line-height: 1;
+    }
+
+    .booking-card .btn {
+      width: 100%;
+      min-height: 44px;
+    }
+
+    .story {
+      padding: 68px 0 0;
+      background: #fff;
+      color: #07102c;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .story::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image: url("assets/wave-pattern-figma.svg");
+      background-repeat: repeat;
+      background-size: 180px 72px;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1fr);
+      gap: 58px;
+      align-items: center;
+    }
+
+    .story-art {
+      position: relative;
+      min-height: 610px;
+    }
+
+    .story-art .mountains {
+      position: absolute;
+      left: -8%;
+      top: 22px;
+      width: 104%;
+      opacity: 0.95;
+      filter: drop-shadow(0 0 20px rgba(29, 245, 255, 0.24));
+    }
+
+    .story-art .raft {
+      position: absolute;
+      left: 25%;
+      top: 205px;
+      width: 46%;
+      z-index: 2;
+      filter: drop-shadow(0 28px 42px rgba(0, 0, 0, 0.62));
+    }
+
+    .story-art .lotus {
+      position: absolute;
+      left: 2%;
+      bottom: 42px;
+      width: 32%;
+      z-index: 3;
+      filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.5));
+    }
+
+    .story-copy {
+      align-self: start;
+      padding-top: 36px;
+      color: #0d1430;
+    }
+
+    .story-copy h2 {
+      margin: 0 0 30px;
+      color: #09123b;
+      font-size: 22px;
+      line-height: 1.35;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .story-copy p {
+      margin: 0 0 16px;
+      color: #07102c;
+      font-size: 14px;
+      line-height: 2.1;
+      font-weight: 600;
+    }
+
+    .features {
+      margin-top: 0;
+      padding: 24px 0 26px;
+      background:
+        linear-gradient(180deg, rgba(5, 8, 30, 0.95), rgba(5, 8, 30, 0.95)),
+        repeating-radial-gradient(ellipse at 50% 0%, rgba(29, 245, 255, 0.08) 0 2px, transparent 2px 23px);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 52px;
+      align-items: center;
+    }
+
+    .features h2 {
+      margin: 0 0 20px;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .features ul {
+      display: grid;
+      gap: 22px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: #f3f5ff;
+      font-size: 14px;
+      line-height: 1.75;
+      font-weight: 600;
+    }
+
+    .feature-logo {
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      padding: 26px 28px;
+      background: rgba(5, 7, 26, 0.38);
+    }
+
+    .poster-row {
+      padding: 42px 0 76px;
+      background: #fff;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .poster-row::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image: url("assets/wave-pattern-figma.svg");
+      background-repeat: repeat;
+      background-size: 180px 72px;
+    }
+
+    .poster-track {
+      display: flex;
+      width: max-content;
+      animation: posterMarquee 48s linear infinite;
+      will-change: transform;
+    }
+
+    .poster-set {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 44px;
+      padding-right: 44px;
+    }
+
+    .poster-item {
+      width: calc((100vw - 132px) / 3);
+      min-width: 280px;
+      height: auto;
+      aspect-ratio: 1755 / 2481;
+      object-fit: contain;
+      object-position: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    @keyframes posterMarquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .watch {
+      padding: 28px 0 54px;
+      background: #fff;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .watch::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image: url("assets/wave-pattern-figma.svg");
+      background-repeat: repeat;
+      background-size: 180px 72px;
+    }
+
+    .watch p {
+      margin: 0 0 20px;
+      color: #07102c;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .watch .btn {
+      min-width: 255px;
+      min-height: 48px;
+    }
+
+    .watch-inner {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    footer {
+      background: #060923;
+      padding: 38px 0 0;
+      overflow: hidden;
+    }
+
+    .footer-logo {
+      width: 130px;
+      margin-bottom: 58px;
+    }
+
+    .footer-wave {
+      height: 160px;
+      background: url("assets/wave-border.png") repeat-x bottom center / auto 160px;
+      filter: drop-shadow(0 -6px 14px rgba(24, 248, 255, 0.38));
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        padding: 20px 0;
+      }
+
+      .brand {
+        justify-content: flex-start;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav-links,
+      .nav-action {
+        grid-column: 1 / -1;
+        display: none;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .nav.is-open .nav-links,
+      .nav.is-open .nav-action {
+        display: flex;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 0;
+        padding-top: 14px;
+      }
+
+      .nav-links a {
+        padding: 13px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.13);
+      }
+
+      .nav-action {
+        padding-top: 10px;
+      }
+
+      .nav-action::before {
+        display: none;
+      }
+
+      .hero-grid,
+      .story-grid,
+      .features-grid,
+      .ticket-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 28px;
+      }
+
+      .hero-copy {
+        order: -1;
+      }
+
+      .event-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-block {
+        border-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.42);
+        padding: 16px 0 0;
+        min-height: 0;
+      }
+
+      .meta-block:first-child {
+        border-top: 0;
+      }
+
+      .story-art {
+        min-height: 520px;
+      }
+
+      .story-copy {
+        padding-top: 0;
+      }
+
+      .feature-logo {
+        max-width: 360px;
+        margin: 0 auto;
+      }
+
+      .poster-track {
+        animation-duration: 42s;
+      }
+
+      .poster-set {
+        gap: 28px;
+        padding-right: 28px;
+      }
+
+      .poster-item {
+        width: min(42vw, 300px);
+        min-width: 230px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .shell {
+        width: min(100% - 28px, var(--max));
+      }
+
+      .brand {
+        gap: 10px;
+      }
+
+      .brand .logo-3d {
+        width: 68px;
+      }
+
+      .brand .logo-title {
+        width: 80px;
+      }
+
+      .nav-links {
+        gap: 20px;
+        font-size: 13px;
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .hero-poster {
+        width: min(260px, 74vw);
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 24px;
+      }
+
+      .hero-copy h2 {
+        font-size: 14px;
+      }
+
+      .hero-copy p,
+      .story-copy p,
+      .features ul {
+        font-size: 13px;
+      }
+
+      .ticket-title h2 {
+        font-size: 30px;
+      }
+
+      .booking-card {
+        padding: 22px 14px 26px;
+      }
+
+      .story {
+        padding-top: 44px;
+      }
+
+      .story-art {
+        min-height: 420px;
+      }
+
+      .story-art .raft {
+        left: 23%;
+        top: 150px;
+        width: 52%;
+      }
+
+      .story-art .lotus {
+        width: 42%;
+      }
+
+      .features-grid {
+        gap: 28px;
+      }
+
+      .poster-track {
+        animation-duration: 36s;
+      }
+
+      .poster-item {
+        width: 230px;
+      }
+
+      .watch .btn {
+        width: 100%;
+      }
+
+      .footer-wave {
+        height: 112px;
+        background-size: auto 112px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Điều hướng chính">
+      <a class="brand" href="#top" aria-label="3D Mapping Huyền sử Yết Kiêu">
+        <img class="logo-3d" src="assets/logo-3d-mapping.png" alt="3D Mapping" />
+        <img class="logo-title" src="assets/title-yet-kieu.png" alt="Huyền sử Yết Kiêu" />
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Trang chủ</a>
+        <a href="#about">Vé</a>
+        <a href="https://nguyenthuyan.netlify.app/#about">Liên hệ</a>
+      </div>
+      <div class="nav-action">
+        <a class="btn" href="#contact">Đăng nhập</a>
+      </div>
+      <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </nav>
+    <div class="neon-rule"></div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <img class="hero-poster" src="assets/poster-yet-kieu.png" alt="Poster Huyền sử Yết Kiêu" />
+        <div class="hero-copy">
+          <h1>Huyền sử Yết Kiêu</h1>
+          <h2>Một huyền thoại được thắp sáng bằng ánh sáng công nghệ</h2>
+          <p>Khám phá câu chuyện hào hùng về Yết Kiêu - Vị anh hùng thủy chiến kiệt xuất thời nhà Trần, người góp phần làm nên chiến thắng chống quân Nguyên Mông trên sông nước Đại Việt.</p>
+          <p>Lần đầu tiên, nghệ thuật múa rối nước truyền thống được kết hợp cùng Projection 3D Mapping, mang đến một không gian sân khấu sống động, nơi hình ảnh, ánh sáng, mặt nước và con rối hòa quyện thành trải nghiệm thị giác hoàn toàn mới.</p>
+
+          <div class="event-meta">
+            <div class="meta-block">
+              <span class="meta-kicker">19:30 Thứ Bảy</span>
+              <strong class="meta-strong">15.08.2026</strong>
+            </div>
+            <div class="meta-block">
+              <strong class="meta-strong">Nhà hát Múa rối nước Rồng Phương Nam.</strong>
+              <span class="meta-small">Số 2 Nguyễn Bỉnh Khiêm, P. Sài Gòn, TP. HCM</span>
+            </div>
+            <div class="meta-block">
+              <span class="meta-small">Trải nghiệm nghệ thuật Rối nước kết hợp Công nghệ 3D Mapping</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ticket-strip" id="about">
+      <div class="shell ticket-grid">
+        <div class="ticket-title">
+          <h2>Huyền sử Yết Kiêu - Vở diễn rối nước kết hợp 3D Mapping</h2>
+          <div class="ticket-actions">
+            <a class="outline-btn" href="#contact">
+              <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m12 3.5 2.7 5.48 6.05.88-4.38 4.27 1.03 6.02L12 17.31l-5.4 2.84 1.03-6.02-4.38-4.27 6.05-.88L12 3.5Z" />
+              </svg>
+              Tôi quan tâm
+            </a>
+            <a class="outline-btn" href="#contact">
+              <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 15V3" />
+                <path d="m7 8 5-5 5 5" />
+                <path d="M4 14v4.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V14" />
+              </svg>
+              Chia sẻ sự kiện
+            </a>
+          </div>
+        </div>
+        <aside class="booking-card" aria-label="Đặt chỗ">
+          <div class="booking-head">
+            <span>Đặt chỗ của bạn</span>
+            <span class="booking-icons">
+              <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m12 3.5 2.7 5.48 6.05.88-4.38 4.27 1.03 6.02L12 17.31l-5.4 2.84 1.03-6.02-4.38-4.27 6.05-.88L12 3.5Z" />
+              </svg>
+              <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 15V3" />
+                <path d="m7 8 5-5 5 5" />
+                <path d="M4 14v4.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V14" />
+              </svg>
+            </span>
+          </div>
+          <a class="btn" href="#contact">Vé xem</a>
+        </aside>
+      </div>
+    </section>
+    <div class="neon-rule"></div>
+
+    <section class="story">
+      <div class="shell story-grid">
+        <div class="story-art" aria-hidden="true">
+          <img class="mountains" src="assets/mountain-water.png" alt="" />
+          <img class="raft" src="assets/boy-raft.png" alt="" />
+          <img class="lotus" src="assets/lotus.png" alt="" />
+        </div>
+        <article class="story-copy">
+          <h2>Tóm tắt câu chuyện</h2>
+          <p>Vở rối nước Huyền sử Yết Kiêu mở đầu bằng không khí tưng bừng của lễ hội sông nước làng Nguyên Xá, nơi chàng trai Phạm Hữu Thế nổi bật với tài bơi lặn xuất chúng. Trong một lần đi câu, anh gặp trâu thần Bạch Ngưu và được ban cho chiếc lông thần giúp tăng sức mạnh phi thường.</p>
+          <p>Khi giặc Nguyên Mông xâm lược, Hữu Thế gia nhập quân đội của Hưng Đạo Vương Trần Quốc Tuấn. Sau khi chiến thắng Đô Châu trong cuộc thi đấu vật, anh được giao chỉ huy đội thủy binh và mang tên Yết Kiêu.</p>
+          <p>Với tài lặn siêu phàm, Yết Kiêu nhiều lần đục thủng chiến thuyền địch, góp phần làm nên chiến thắng vang dội trước quân Nguyên Mông.</p>
+          <p>Vở diễn khép lại bằng khúc khải hoàn ca chiến thắng, tôn vinh Yết Kiêu như biểu tượng của lòng dũng cảm, trí tuệ và tinh thần yêu nước của dân tộc Đại Việt.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="shell features-grid">
+        <div>
+          <h2>Điểm đặc sắc</h2>
+          <ul>
+            <li>🌊 Không gian thủy đình được mở rộng bằng công nghệ 3D Mapping.</li>
+            <li>🎭 Múa rối nước truyền thống kết hợp ngôn ngữ mỹ thuật số.</li>
+            <li>✨ Hiệu ứng ánh sáng, khói và mặt nước tạo chiều sâu thị giác.</li>
+            <li>⚔️ Tái hiện các trận thủy chiến hào hùng của Yết Kiêu.</li>
+            <li>🎼 Âm nhạc dân gian kết hợp thiết kế âm thanh hiện đại.</li>
+            <li>🔥 Tôn vinh giá trị văn hóa Việt Nam qua hình thức trình diễn đương đại.</li>
+          </ul>
+        </div>
+        <div class="feature-logo">
+          <img src="assets/title-yet-kieu.png" alt="Huyền sử Yết Kiêu 3D Mapping" />
+        </div>
+      </div>
+    </section>
+    <div class="neon-rule"></div>
+
+    <section class="poster-row" aria-label="Poster chương trình">
+      <div class="poster-track">
+        <div class="poster-set">
+          <img class="poster-item" src="assets/poster-blue-vertical.png" alt="Poster sân khấu 3D Mapping" />
+          <img class="poster-item" src="assets/poster-yet-kieu-vertical.png" alt="Poster Huyền sử Yết Kiêu" />
+          <img class="poster-item" src="assets/poster-3d-vertical.png" alt="Poster 3D Mapping sân khấu rối nước" />
+        </div>
+        <div class="poster-set" aria-hidden="true">
+          <img class="poster-item" src="assets/poster-blue-vertical.png" alt="" />
+          <img class="poster-item" src="assets/poster-yet-kieu-vertical.png" alt="" />
+          <img class="poster-item" src="assets/poster-3d-vertical.png" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <section class="watch" id="contact">
+      <div class="watch-inner">
+        <p>Vé xem buổi trình diễn Huyền sử Yết Kiêu - Rối nước kết hợp 3D Mapping cao thế mua tại đây</p>
+        <a class="btn" href="mailto:hello@example.com">Vé xem</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <img class="footer-logo" src="assets/logo-3d-mapping.png" alt="3D Mapping" />
+    </div>
+    <div class="footer-wave" aria-hidden="true"></div>
+  </footer>
+  <script>
+    const nav = document.querySelector(".nav");
+    const menuToggle = document.querySelector(".menu-toggle");
+
+    if (nav && menuToggle) {
+      menuToggle.addEventListener("click", () => {
+        const isOpen = nav.classList.toggle("is-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      nav.querySelectorAll(".nav-links a, .nav-action a").forEach((link) => {
+        link.addEventListener("click", () => {
+          nav.classList.remove("is-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+        });
+      });
+    }
+  </script>
+</body>
+</html>

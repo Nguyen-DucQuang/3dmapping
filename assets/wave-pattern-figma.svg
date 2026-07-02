@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="72" viewBox="0 0 180 72">
+  <defs>
+    <path id="soft-wave" d="M-180 0 C-157.5 -15 -112.5 -15 -90 0 S-22.5 15 0 0 S67.5 -15 90 0 S157.5 15 180 0 S247.5 -15 270 0 S337.5 15 360 0"/>
+  </defs>
+  <rect width="180" height="72" fill="transparent"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".95">
+    <g transform="translate(0 0)">
+      <use href="#soft-wave" stroke="#f2f7fc" stroke-width="15"/>
+      <use href="#soft-wave" stroke="#dfeaf6" stroke-width="7"/>
+      <use href="#soft-wave" stroke="#fbfdff" stroke-width="2.6"/>
+    </g>
+    <g transform="translate(0 24)">
+      <use href="#soft-wave" stroke="#f2f7fc" stroke-width="15"/>
+      <use href="#soft-wave" stroke="#dfeaf6" stroke-width="7"/>
+      <use href="#soft-wave" stroke="#fbfdff" stroke-width="2.6"/>
+    </g>
+    <g transform="translate(0 48)">
+      <use href="#soft-wave" stroke="#f2f7fc" stroke-width="15"/>
+      <use href="#soft-wave" stroke="#dfeaf6" stroke-width="7"/>
+      <use href="#soft-wave" stroke="#fbfdff" stroke-width="2.6"/>
+    </g>
+    <g transform="translate(0 72)">
+      <use href="#soft-wave" stroke="#f2f7fc" stroke-width="15"/>
+      <use href="#soft-wave" stroke="#dfeaf6" stroke-width="7"/>
+      <use href="#soft-wave" stroke="#fbfdff" stroke-width="2.6"/>
+    </g>
+  </g>
+</svg>

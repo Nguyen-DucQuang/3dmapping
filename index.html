@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang chủ - Huyền sử Yết Kiêu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #050827;
+      --navy-2: #070a39;
+      --deep: #020414;
+      --cyan: #18f8ff;
+      --pink: #ff0b78;
+      --white: #fff;
+      --ink: #121629;
+      --muted: #d5d9ee;
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Be Vietnam Pro", Arial, sans-serif;
+      color: var(--white);
+      background: var(--deep);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .shell {
+      width: min(1040px, calc(100% - 56px));
+      margin: 0 auto;
+    }
+
+    .led-line {
+      height: 4px;
+      background: linear-gradient(90deg, #1cff2a 0%, #ecff1d 20%, #28ff70 37%, #15f9ff 56%, #ffa33d 76%, #ff0b78 100%);
+      box-shadow: 0 0 10px rgba(24, 248, 255, 0.45), 0 0 18px rgba(255, 11, 120, 0.25);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 36px;
+      border-radius: 999px;
+      background: var(--pink);
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 14px 34px rgba(255, 11, 120, 0.28);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: #ff2b91;
+    }
+
+    .site-header {
+      background: linear-gradient(180deg, #080c83 0%, #060735 100%);
+    }
+
+    .nav {
+      min-height: 94px;
+      display: grid;
+      grid-template-columns: 250px 1fr auto;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img:first-child {
+      width: 86px;
+      filter: drop-shadow(0 0 10px rgba(24, 248, 255, 0.35));
+    }
+
+    .brand img:last-child {
+      width: 96px;
+      filter: drop-shadow(0 0 10px rgba(255, 11, 120, 0.35));
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 92px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
+
+    .nav-action {
+      display: flex;
+      align-items: center;
+      gap: 42px;
+    }
+
+    .nav-action::before {
+      content: "";
+      width: 1px;
+      height: 46px;
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .nav-action .btn {
+      min-height: 42px;
+      padding: 0 32px;
+      font-size: 15px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      justify-self: end;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .menu-toggle span,
+    .menu-toggle::before,
+    .menu-toggle::after {
+      content: "";
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-toggle {
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav.is-open .menu-toggle::before {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav.is-open .menu-toggle span {
+      opacity: 0;
+    }
+
+    .nav.is-open .menu-toggle::after {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 360px;
+      padding: 22px 0 48px;
+      background: var(--navy);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.9fr) minmax(390px, 1fr);
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-art {
+      position: relative;
+      min-height: 315px;
+    }
+
+    .hero-art .mountain {
+      position: absolute;
+      left: 8%;
+      top: -4px;
+      width: 76%;
+      opacity: 0.9;
+      filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.32));
+    }
+
+    .hero-art .boy {
+      position: absolute;
+      left: 29%;
+      bottom: 24px;
+      width: 42%;
+      z-index: 2;
+      filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.5));
+    }
+
+    .hero-art .lotus {
+      position: absolute;
+      left: 7%;
+      bottom: -2px;
+      width: 28%;
+      z-index: 3;
+      filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.36));
+    }
+
+    .hero-copy h1 {
+      max-width: 560px;
+      margin: 0 0 20px;
+      color: var(--cyan);
+      font-size: clamp(28px, 3.05vw, 36px);
+      line-height: 1.18;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      max-width: 560px;
+      margin: 0 0 10px;
+      color: #ecf0ff;
+      font-size: 14px;
+      line-height: 2.05;
+      font-weight: 700;
+    }
+
+    .hero-copy .btn {
+      margin-top: 14px;
+    }
+
+    .white-story {
+      position: relative;
+      margin-top: -42px;
+      padding: 78px 0 82px;
+      color: var(--ink);
+      background: #fff;
+      isolation: isolate;
+      overflow: hidden;
+      clip-path: polygon(0 7%, 9% 3.6%, 22% 5%, 36% 2.8%, 49% 5%, 63% 2%, 78% 5%, 100% 0, 100% 90%, 90% 95%, 75% 93%, 61% 97%, 47% 94%, 33% 97%, 17% 93%, 0 100%);
+    }
+
+    .white-story::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: url("assets/wave-pattern-figma.svg") repeat;
+      background-size: 180px 72px;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    .story-copy h2 {
+      max-width: 520px;
+      margin: 0 0 18px;
+      color: #2c303a;
+      font-size: clamp(28px, 3vw, 35px);
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .story-copy p {
+      max-width: 520px;
+      margin: 0 0 8px;
+      color: #1f2638;
+      font-size: 13px;
+      line-height: 2.08;
+      font-weight: 700;
+    }
+
+    .story-copy .btn {
+      margin-top: 14px;
+      min-width: 220px;
+    }
+
+    .story-image {
+      justify-self: end;
+      width: min(650px, 122%);
+      filter: drop-shadow(0 24px 36px rgba(4, 12, 35, 0.22));
+    }
+
+    .event {
+      padding: 72px 0 0;
+      background: linear-gradient(180deg, #05071f 0%, #07114b 100%);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .event h2 {
+      margin: 0 auto 48px;
+      color: var(--cyan);
+      font-size: clamp(30px, 3.25vw, 42px);
+      line-height: 1.38;
+      font-weight: 900;
+    }
+
+    .event h2 span {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .event-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 82px;
+      margin-bottom: 44px;
+    }
+
+    .event-logos img:first-child {
+      width: 255px;
+    }
+
+    .event-logos img:last-child {
+      width: 285px;
+    }
+
+    .event-meta {
+      display: grid;
+      grid-template-columns: 150px minmax(320px, 1fr) minmax(260px, 0.9fr);
+      gap: 24px;
+      align-items: center;
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .meta-block {
+      min-height: 88px;
+      padding: 0 24px;
+      border-left: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .meta-block:first-child {
+      border-left: 0;
+      padding-left: 0;
+    }
+
+    .meta-kicker {
+      display: block;
+      margin-bottom: 8px;
+      color: #f2f5ff;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .meta-strong {
+      display: block;
+      color: #fff;
+      font-size: 22px;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .meta-small {
+      display: block;
+      margin-top: 8px;
+      color: #eef3ff;
+      font-size: 15px;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .stage-art {
+      position: relative;
+      height: 390px;
+      margin-top: 68px;
+      overflow: hidden;
+    }
+
+    .stage-art img {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 100%;
+      max-width: none;
+      transform: translateX(-50%);
+      filter: drop-shadow(0 -8px 32px rgba(24, 248, 255, 0.22));
+    }
+
+    .ticket-info {
+      padding: 50px 0 52px;
+      background: #050814;
+    }
+
+    .ticket-info h2 {
+      margin: 0 0 28px;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .ticket-info p {
+      margin: 0 0 22px;
+      color: #dce3f6;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .ticket-info .btn {
+      min-width: 260px;
+    }
+
+    footer {
+      background: #060923;
+      padding: 38px 0 0;
+      overflow: hidden;
+    }
+
+    .footer-logo {
+      width: 130px;
+      margin-bottom: 58px;
+    }
+
+    .footer-wave {
+      height: 160px;
+      background: url("assets/wave-border.png") repeat-x bottom center / auto 160px;
+      filter: drop-shadow(0 -6px 14px rgba(24, 248, 255, 0.38));
+    }
+
+    @media (max-width: 960px) {
+      .nav {
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        padding: 22px 0;
+      }
+
+      .brand {
+        justify-content: flex-start;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav-links,
+      .nav-action {
+        grid-column: 1 / -1;
+        display: none;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .nav.is-open .nav-links,
+      .nav.is-open .nav-action {
+        display: flex;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 0;
+        padding-top: 14px;
+      }
+
+      .nav-links a {
+        padding: 13px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.13);
+      }
+
+      .nav-action {
+        padding-top: 10px;
+      }
+
+      .nav-action::before {
+        display: none;
+      }
+
+      .hero-grid,
+      .story-grid,
+      .event-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .hero-copy p,
+      .hero-copy h1,
+      .story-copy h2,
+      .story-copy p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .story-image {
+        justify-self: center;
+        order: -1;
+        width: min(620px, 112%);
+      }
+
+      .story-copy {
+        order: 1;
+      }
+
+      .event-logos {
+        gap: 34px;
+        flex-wrap: wrap;
+      }
+
+      .event h2 span {
+        white-space: normal;
+      }
+
+      .meta-block {
+        border-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.45);
+        padding: 18px 0 0;
+        text-align: center;
+      }
+
+      .meta-block:first-child {
+        border-top: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .shell {
+        width: min(100% - 28px, var(--max));
+      }
+
+      .brand img:first-child {
+        width: 70px;
+      }
+
+      .brand img:last-child {
+        width: 82px;
+      }
+
+      .nav-links {
+        gap: 24px;
+        font-size: 13px;
+      }
+
+      .hero {
+        padding-top: 30px;
+      }
+
+      .hero-art {
+        min-height: 350px;
+      }
+
+      .hero-art .mountain {
+        width: 105%;
+        left: -6%;
+      }
+
+      .hero-art .boy {
+        width: 56%;
+        left: 26%;
+      }
+
+      .white-story {
+        padding: 88px 0 84px;
+        clip-path: polygon(0 3%, 20% 1%, 42% 4%, 65% 1%, 100% 4%, 100% 96%, 75% 98%, 48% 95%, 22% 98%, 0 95%);
+      }
+
+      .story-copy {
+        text-align: center;
+      }
+
+      .story-image {
+        width: min(520px, 120%);
+      }
+
+      .event {
+        padding-top: 54px;
+      }
+
+      .event-logos img:first-child {
+        width: 210px;
+      }
+
+      .event-logos img:last-child {
+        width: 230px;
+      }
+
+      .footer-wave {
+        height: 112px;
+        background-size: auto 112px;
+      }
+
+      .stage-art {
+        height: 250px;
+      }
+
+      .stage-art img {
+        width: 150%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Điều hướng chính">
+      <a class="brand" href="index.html" aria-label="3D Mapping Huyền sử Yết Kiêu">
+        <img src="assets/logo-3d-mapping.png" alt="3D Mapping" />
+        <img src="assets/title-yet-kieu.png" alt="Huyền sử Yết Kiêu" />
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Trang chủ</a>
+        <a href="ve.html">Vé</a>
+        <a href="https://nguyenthuyan.netlify.app/#about">Liên hệ</a>
+      </div>
+      <div class="nav-action">
+        <a class="btn" href="#contact">Đăng nhập</a>
+      </div>
+      <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </nav>
+    <div class="led-line"></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-art" aria-hidden="true">
+          <img class="mountain" src="assets/mountain-water.png" alt="" />
+          <img class="boy" src="assets/boy-raft.png" alt="" />
+          <img class="lotus" src="assets/lotus.png" alt="" />
+        </div>
+        <div class="hero-copy">
+          <h1>Truyền thống và công nghệ hòa quyện trong một trải nghiệm mới.</h1>
+          <p>Lần đầu tiên, nghệ thuật múa rối nước truyền thống được kết hợp cùng Projection 3D Mapping, mang đến một không gian sân khấu sống động, nơi hình ảnh, ánh sáng, mặt nước và con rối hòa quyện thành trải nghiệm thị giác hoàn toàn mới.</p>
+          <a class="btn" href="#experience">Khám phá ngay</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="white-story" id="experience">
+      <div class="shell story-grid">
+        <div class="story-copy">
+          <h2>Tôn vinh bản sắc Việt bằng ngôn ngữ sân khấu đương đại.</h2>
+          <p>Khám phá câu chuyện hào hùng về Yết Kiêu Vị anh hùng thủy chiến kiệt xuất thời nhà Trần, người góp phần làm nên chiến thắng chống quân Nguyên Mông trên sông nước Đại Việt.</p>
+          <a class="btn" href="ve.html">Vé xem</a>
+        </div>
+        <img class="story-image" src="assets/performance-scene.png" alt="Sân khấu rối nước kết hợp 3D Mapping" />
+      </div>
+    </section>
+
+    <section class="event">
+      <div class="shell">
+        <h2>
+          <span>Lịch sử được tái hiện chân thực, chạm đến cảm xúc</span>
+          <span>Đắm chìm trong không gian nghệ thuật đa giác quan.</span>
+        </h2>
+        <div class="event-logos" aria-label="Logo chương trình">
+          <img src="assets/logo-3d-mapping.png" alt="3D Mapping" />
+          <img src="assets/title-yet-kieu.png" alt="Huyền sử Yết Kiêu" />
+        </div>
+        <div class="event-meta">
+          <div class="meta-block">
+            <span class="meta-kicker">19:30 Thứ Bảy</span>
+            <strong class="meta-strong">15.08.2026</strong>
+          </div>
+          <div class="meta-block">
+            <strong class="meta-strong">Nhà hát Múa rối nước Rồng Phương Nam.</strong>
+            <span class="meta-small">Số 2 Nguyễn Bỉnh Khiêm, P. Sài Gòn, TP. HCM</span>
+          </div>
+          <div class="meta-block">
+            <span class="meta-small">Trải nghiệm nghệ thuật Rối nước kết hợp Công nghệ 3D Mapping</span>
+          </div>
+        </div>
+      </div>
+      <div class="stage-art" aria-hidden="true">
+        <img src="assets/wide-lotus-stage.png" alt="" />
+      </div>
+    </section>
+
+    <div class="led-line"></div>
+
+    <section class="ticket-info" id="contact">
+      <div class="shell">
+        <h2>Thông tin vé</h2>
+        <p>Vé xem buổi trình diễn Huyền Sử Yết Kiêu - Rối nước kết hợp 3D Mapping có thể mua tại đây!</p>
+        <a class="btn" href="ve.html">Vé xem</a>
+      </div>
+    </section>
+
+    <div class="led-line"></div>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <img class="footer-logo" src="assets/logo-3d-mapping.png" alt="3D Mapping" />
+    </div>
+    <div class="footer-wave" aria-hidden="true"></div>
+  </footer>
+  <script>
+    const nav = document.querySelector(".nav");
+    const menuToggle = document.querySelector(".menu-toggle");
+
+    if (nav && menuToggle) {
+      menuToggle.addEventListener("click", () => {
+        const isOpen = nav.classList.toggle("is-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      nav.querySelectorAll(".nav-links a, .nav-action a").forEach((link) => {
+        link.addEventListener("click", () => {
+          nav.classList.remove("is-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+        });
+      });
+    }
+  </script>
+</body>
+</html>
