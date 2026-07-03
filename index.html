@@ -6,7 +6,7 @@
   <title>Trang chủ - Huyền sử Yết Kiêu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Inter:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #050827;
@@ -33,6 +33,10 @@
       font-family: "Be Vietnam Pro", Arial, sans-serif;
       color: var(--white);
       background: var(--deep);
+      overflow-x: hidden;
+    }
+
+    body.menu-open {
       overflow-x: hidden;
     }
 
@@ -78,6 +82,7 @@
     }
 
     .site-header {
+      position: static;
       background: linear-gradient(180deg, #080c83 0%, #060735 100%);
     }
 
@@ -181,53 +186,65 @@
 
     .hero {
       position: relative;
+      z-index: 1;
       min-height: 360px;
-      padding: 22px 0 132px;
-      background: var(--navy) url("assets/hero-wave-background-matched.png") center bottom / 100% auto no-repeat;
-      overflow: hidden;
+      padding: 22px 0 128px;
+      background: var(--navy);
+      overflow: visible;
     }
 
     .hero::after {
-      content: none;
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -48px;
+      z-index: 3;
+      height: min(23.8vw, 348px);
+      background: url("assets/linetren-matched.png") center bottom / 100% auto no-repeat;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+      pointer-events: none;
     }
 
     .hero-grid {
       position: relative;
-      z-index: 1;
+      z-index: 4;
       display: grid;
-      grid-template-columns: minmax(300px, 0.9fr) minmax(390px, 1fr);
-      gap: 56px;
+      grid-template-columns: minmax(360px, 1.05fr) minmax(390px, 1fr);
+      gap: 86px;
       align-items: center;
     }
 
     .hero-art {
       position: relative;
-      min-height: 315px;
+      min-height: 390px;
+      transform: translateX(-36px);
     }
 
     .hero-art .mountain {
       position: absolute;
-      left: 8%;
-      top: -4px;
-      width: 76%;
+      left: 12%;
+      top: -34px;
+      width: 120%;
       opacity: 0.9;
       filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.32));
     }
 
     .hero-art .boy {
       position: absolute;
-      left: 29%;
-      bottom: 24px;
-      width: 42%;
+      left: 31%;
+      bottom: 46px;
+      width: 48%;
       z-index: 2;
       filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.5));
     }
 
     .hero-art .lotus {
       position: absolute;
-      left: 7%;
-      bottom: -2px;
-      width: 28%;
+      left: 0;
+      bottom: 20px;
+      width: 34%;
       z-index: 3;
       filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.36));
     }
@@ -257,10 +274,11 @@
 
     .white-story {
       position: relative;
-      margin-top: -16px;
-      padding: 42px 0 158px;
+      z-index: 0;
+      margin-top: -1px;
+      padding: 56px 0 158px;
       color: var(--ink);
-      background: #fff url("assets/backgroundchinh.png") center -16px / 59.1667vw auto repeat;
+      background: #fff url("assets/backgroundchinh.png") center -17.87vw / 58.56vw auto repeat;
       isolation: isolate;
       overflow: hidden;
     }
@@ -276,7 +294,7 @@
       right: 0;
       bottom: -3px;
       height: 137px;
-      z-index: 0;
+      z-index: 3;
       background: url("assets/lineduoi.png") center bottom / 100% 100% no-repeat;
       pointer-events: none;
     }
@@ -285,12 +303,14 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
-      gap: 42px;
+      grid-template-columns: minmax(0, 0.82fr) minmax(520px, 1.18fr);
+      gap: 20px;
       align-items: center;
     }
 
     .story-copy h2 {
+      position: relative;
+      z-index: 2;
       max-width: 520px;
       margin: 0 0 18px;
       color: #2c303a;
@@ -299,7 +319,13 @@
       font-weight: 900;
     }
 
+    .story-copy {
+      transform: translateX(-34px);
+    }
+
     .story-copy p {
+      position: relative;
+      z-index: 2;
       max-width: 520px;
       margin: 0 0 8px;
       color: #1f2638;
@@ -309,13 +335,19 @@
     }
 
     .story-copy .btn {
+      position: relative;
+      z-index: 2;
       margin-top: 14px;
       min-width: 220px;
     }
 
     .story-image {
+      position: relative;
+      z-index: 1;
       justify-self: end;
-      width: min(650px, 122%);
+      width: min(1080px, 185%);
+      max-width: none;
+      transform: translateX(22%);
       filter: drop-shadow(0 24px 36px rgba(4, 12, 35, 0.22));
     }
 
@@ -330,9 +362,10 @@
     .event h2 {
       margin: 0 auto 48px;
       color: var(--cyan);
-      font-size: clamp(30px, 3.25vw, 42px);
-      line-height: 1.38;
-      font-weight: 900;
+      font-family: "Inter", "Be Vietnam Pro", Arial, sans-serif;
+      font-size: clamp(24px, 2.45vw, 34px);
+      line-height: 1.32;
+      font-weight: 700;
     }
 
     .event h2 span {
@@ -473,6 +506,22 @@
         display: inline-flex;
       }
 
+      .nav.is-open {
+        position: static;
+        z-index: 1000;
+        width: 100%;
+        min-height: auto;
+        align-content: start;
+        padding: 22px 0 30px;
+        overflow-y: auto;
+        background: linear-gradient(180deg, #080c83 0%, #060735 100%);
+      }
+
+      body.menu-open main,
+      body.menu-open footer {
+        display: block;
+      }
+
       .nav-links,
       .nav-action {
         grid-column: 1 / -1;
@@ -490,20 +539,28 @@
       .nav-links {
         flex-direction: column;
         gap: 0;
-        padding-top: 14px;
+        padding-top: 18px;
       }
 
       .nav-links a {
-        padding: 13px 0;
+        padding: 16px 0;
         border-top: 1px solid rgba(255, 255, 255, 0.13);
       }
 
+      .nav.is-open .nav-links a {
+        font-size: 18px;
+      }
+
       .nav-action {
-        padding-top: 10px;
+        padding-top: 16px;
       }
 
       .nav-action::before {
         display: none;
+      }
+
+      .nav.is-open .nav-action .btn {
+        width: min(360px, 100%);
       }
 
       .hero-grid,
@@ -514,6 +571,10 @@
 
       .hero-copy {
         text-align: center;
+      }
+
+      .hero-art {
+        transform: none;
       }
 
       .hero-copy p,
@@ -528,10 +589,12 @@
         justify-self: center;
         order: -1;
         width: min(620px, 112%);
+        transform: none;
       }
 
       .story-copy {
         order: 1;
+        transform: none;
       }
 
       .event-logos {
@@ -575,24 +638,56 @@
 
       .hero {
         padding-top: 30px;
+        overflow: visible;
+      }
+
+      .hero-grid,
+      .story-grid {
+        justify-items: center;
+        width: min(100% - 28px, var(--max));
+      }
+
+      .hero::after {
+        bottom: -18px;
+        height: 126px;
+        background-size: 100% 126px;
+        -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
       }
 
       .hero-art {
         min-height: 350px;
+        width: min(330px, calc(100vw - 28px));
+        justify-self: center;
+        margin: 0 auto;
       }
 
       .hero-art .mountain {
-        width: 105%;
-        left: -6%;
+        width: 118%;
+        left: 50%;
+        top: -18px;
+        transform: translateX(-50%);
       }
 
       .hero-art .boy {
         width: 56%;
-        left: 26%;
+        left: 50%;
+        bottom: 34px;
+        transform: translateX(-45%);
+      }
+
+      .hero-art .lotus {
+        width: 36%;
+        left: 50%;
+        bottom: 18px;
+        transform: translateX(-145%);
       }
 
       .white-story {
-        padding: 58px 0 128px;
+        margin-top: -1px;
+        padding: 76px 0 128px;
+        background-position: center top;
+        background-size: 320px auto;
       }
 
       .story-copy {
@@ -600,7 +695,10 @@
       }
 
       .story-image {
-        width: min(520px, 120%);
+        justify-self: center;
+        width: min(360px, calc(100vw - 28px));
+        max-width: none;
+        transform: none;
       }
 
       .event {
@@ -732,16 +830,26 @@
     const menuToggle = document.querySelector(".menu-toggle");
 
     if (nav && menuToggle) {
-      menuToggle.addEventListener("click", () => {
-        const isOpen = nav.classList.toggle("is-open");
+      const setMenuState = (isOpen) => {
+        nav.classList.toggle("is-open", isOpen);
+        document.body.classList.toggle("menu-open", isOpen);
         menuToggle.setAttribute("aria-expanded", String(isOpen));
+      };
+
+      menuToggle.addEventListener("click", () => {
+        setMenuState(!nav.classList.contains("is-open"));
       });
 
       nav.querySelectorAll(".nav-links a, .nav-action a").forEach((link) => {
         link.addEventListener("click", () => {
-          nav.classList.remove("is-open");
-          menuToggle.setAttribute("aria-expanded", "false");
+          setMenuState(false);
         });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setMenuState(false);
+        }
       });
     }
   </script>

@@ -6,7 +6,7 @@
   <title>Tạm hết vé - Huyền sử Yết Kiêu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Inter:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #050827;
@@ -29,8 +29,12 @@
       color: var(--white);
       background:
         linear-gradient(180deg, rgba(5, 8, 39, 0.92), rgba(2, 4, 20, 0.98)),
-        url("assets/hero-wave-background-matched.png") center bottom / 100% auto no-repeat,
+        url("assets/hero-wave-background.png") center bottom / 100% auto no-repeat,
         var(--deep);
+      overflow-x: hidden;
+    }
+
+    body.menu-open {
       overflow-x: hidden;
     }
 
@@ -50,15 +54,16 @@
     }
 
     .site-header {
+      position: static;
       background: linear-gradient(180deg, #080c83 0%, #060735 100%);
     }
 
     .nav {
       min-height: 94px;
-      display: flex;
+      display: grid;
+      grid-template-columns: 250px 1fr auto;
       align-items: center;
-      justify-content: space-between;
-      gap: 24px;
+      gap: 36px;
     }
 
     .brand {
@@ -83,10 +88,65 @@
       box-shadow: 0 0 10px rgba(24, 248, 255, 0.45), 0 0 18px rgba(255, 11, 120, 0.25);
     }
 
-    .nav-link {
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 72px;
       font-size: 15px;
-      font-weight: 800;
-      color: #eef3ff;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      opacity: 0.92;
+      transition: color 0.18s ease, opacity 0.18s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+      opacity: 1;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      justify-self: end;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .menu-toggle span,
+    .menu-toggle::before,
+    .menu-toggle::after {
+      content: "";
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-toggle {
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav.is-open .menu-toggle::before {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav.is-open .menu-toggle span {
+      opacity: 0;
+    }
+
+    .nav.is-open .menu-toggle::after {
+      transform: translateY(-7px) rotate(-45deg);
     }
 
     main {
@@ -110,9 +170,10 @@
     .notice h1 {
       margin: 0 0 18px;
       color: var(--cyan);
-      font-size: clamp(36px, 6vw, 64px);
-      line-height: 1.08;
-      font-weight: 900;
+      font-family: "Inter", "Be Vietnam Pro", Arial, sans-serif;
+      font-size: clamp(30px, 4.8vw, 52px);
+      line-height: 1.12;
+      font-weight: 700;
       letter-spacing: 0;
     }
 
@@ -165,7 +226,53 @@
 
     @media (max-width: 640px) {
       .nav {
-        min-height: 84px;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        padding: 18px 0;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav.is-open {
+        position: static;
+        z-index: 1000;
+        width: 100%;
+        min-height: auto;
+        align-content: start;
+        padding: 18px 0 28px;
+        overflow-y: auto;
+        background: linear-gradient(180deg, #080c83 0%, #060735 100%);
+      }
+
+      body.menu-open main,
+      body.menu-open footer {
+        display: block;
+      }
+
+      .nav-links {
+        grid-column: 1 / -1;
+        display: none;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 0;
+        padding-top: 18px;
+      }
+
+      .nav.is-open .nav-links {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 16px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.13);
+      }
+
+      .nav.is-open .nav-links a {
+        font-size: 18px;
       }
 
       .brand img:first-child {
@@ -197,7 +304,13 @@
         <img src="assets/logo-3d-mapping.png" alt="3D Mapping" />
         <img src="assets/title-yet-kieu.png" alt="Huyền sử Yết Kiêu" />
       </a>
-      <a class="nav-link" href="ve.html">Quay lại trang vé</a>
+      <div class="nav-links">
+        <a href="ve.html">Quay lại trang vé</a>
+        <a href="index.html">Về trang chủ</a>
+      </div>
+      <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
+        <span></span>
+      </button>
     </nav>
     <div class="led-line"></div>
   </header>
@@ -213,5 +326,33 @@
       </div>
     </section>
   </main>
+  <script>
+    const nav = document.querySelector(".nav");
+    const menuToggle = document.querySelector(".menu-toggle");
+
+    if (nav && menuToggle) {
+      const setMenuState = (isOpen) => {
+        nav.classList.toggle("is-open", isOpen);
+        document.body.classList.toggle("menu-open", isOpen);
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      };
+
+      menuToggle.addEventListener("click", () => {
+        setMenuState(!nav.classList.contains("is-open"));
+      });
+
+      nav.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          setMenuState(false);
+        });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setMenuState(false);
+        }
+      });
+    }
+  </script>
 </body>
 </html>

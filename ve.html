@@ -39,6 +39,10 @@
       overflow-x: hidden;
     }
 
+    body.menu-open {
+      overflow-x: hidden;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
@@ -81,6 +85,7 @@
     }
 
     .site-header {
+      position: static;
       background: linear-gradient(180deg, #05077b 0%, #050731 100%);
     }
 
@@ -615,6 +620,22 @@
         display: inline-flex;
       }
 
+      .nav.is-open {
+        position: static;
+        z-index: 1000;
+        width: 100%;
+        min-height: auto;
+        align-content: start;
+        padding: 20px 0 28px;
+        overflow-y: auto;
+        background: linear-gradient(180deg, #080c83 0%, #060735 100%);
+      }
+
+      body.menu-open main,
+      body.menu-open footer {
+        display: block;
+      }
+
       .nav-links,
       .nav-action {
         grid-column: 1 / -1;
@@ -632,20 +653,28 @@
       .nav-links {
         flex-direction: column;
         gap: 0;
-        padding-top: 14px;
+        padding-top: 18px;
       }
 
       .nav-links a {
-        padding: 13px 0;
+        padding: 16px 0;
         border-top: 1px solid rgba(255, 255, 255, 0.13);
       }
 
+      .nav.is-open .nav-links a {
+        font-size: 18px;
+      }
+
       .nav-action {
-        padding-top: 10px;
+        padding-top: 16px;
       }
 
       .nav-action::before {
         display: none;
+      }
+
+      .nav.is-open .nav-action .btn {
+        width: min(360px, 100%);
       }
 
       .hero-grid,
@@ -961,16 +990,26 @@
     const menuToggle = document.querySelector(".menu-toggle");
 
     if (nav && menuToggle) {
-      menuToggle.addEventListener("click", () => {
-        const isOpen = nav.classList.toggle("is-open");
+      const setMenuState = (isOpen) => {
+        nav.classList.toggle("is-open", isOpen);
+        document.body.classList.toggle("menu-open", isOpen);
         menuToggle.setAttribute("aria-expanded", String(isOpen));
+      };
+
+      menuToggle.addEventListener("click", () => {
+        setMenuState(!nav.classList.contains("is-open"));
       });
 
       nav.querySelectorAll(".nav-links a, .nav-action a").forEach((link) => {
         link.addEventListener("click", () => {
-          nav.classList.remove("is-open");
-          menuToggle.setAttribute("aria-expanded", "false");
+          setMenuState(false);
         });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setMenuState(false);
+        }
       });
     }
   </script>
