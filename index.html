@@ -182,12 +182,18 @@
     .hero {
       position: relative;
       min-height: 360px;
-      padding: 22px 0 48px;
-      background: var(--navy);
+      padding: 22px 0 132px;
+      background: var(--navy) url("assets/hero-wave-background-matched.png") center bottom / 100% auto no-repeat;
       overflow: hidden;
     }
 
+    .hero::after {
+      content: none;
+    }
+
     .hero-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: minmax(300px, 0.9fr) minmax(390px, 1fr);
       gap: 56px;
@@ -251,25 +257,33 @@
 
     .white-story {
       position: relative;
-      margin-top: -42px;
-      padding: 78px 0 82px;
+      margin-top: -16px;
+      padding: 42px 0 158px;
       color: var(--ink);
-      background: #fff;
+      background: #fff url("assets/backgroundchinh.png") center -16px / 59.1667vw auto repeat;
       isolation: isolate;
       overflow: hidden;
-      clip-path: polygon(0 7%, 9% 3.6%, 22% 5%, 36% 2.8%, 49% 5%, 63% 2%, 78% 5%, 100% 0, 100% 90%, 90% 95%, 75% 93%, 61% 97%, 47% 94%, 33% 97%, 17% 93%, 0 100%);
     }
 
     .white-story::before {
+      content: none;
+    }
+
+    .white-story::after {
       content: "";
       position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: url("assets/wave-pattern-figma.svg") repeat;
-      background-size: 180px 72px;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 137px;
+      z-index: 0;
+      background: url("assets/lineduoi.png") center bottom / 100% 100% no-repeat;
+      pointer-events: none;
     }
 
     .story-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
       gap: 42px;
@@ -306,8 +320,9 @@
     }
 
     .event {
+      margin-top: -3px;
       padding: 72px 0 0;
-      background: linear-gradient(180deg, #05071f 0%, #07114b 100%);
+      background: linear-gradient(180deg, #01021e 0%, #05071f 38%, #07114b 100%);
       text-align: center;
       overflow: hidden;
     }
@@ -577,8 +592,7 @@
       }
 
       .white-story {
-        padding: 88px 0 84px;
-        clip-path: polygon(0 3%, 20% 1%, 42% 4%, 65% 1%, 100% 4%, 100% 96%, 75% 98%, 48% 95%, 22% 98%, 0 95%);
+        padding: 58px 0 128px;
       }
 
       .story-copy {
@@ -659,7 +673,7 @@
         <div class="story-copy">
           <h2>Tôn vinh bản sắc Việt bằng ngôn ngữ sân khấu đương đại.</h2>
           <p>Khám phá câu chuyện hào hùng về Yết Kiêu Vị anh hùng thủy chiến kiệt xuất thời nhà Trần, người góp phần làm nên chiến thắng chống quân Nguyên Mông trên sông nước Đại Việt.</p>
-          <a class="btn" href="ve.html">Vé xem</a>
+          <a class="btn" href="het-ve.html">Đặt vé</a>
         </div>
         <img class="story-image" src="assets/performance-scene.png" alt="Sân khấu rối nước kết hợp 3D Mapping" />
       </div>
@@ -700,7 +714,7 @@
       <div class="shell">
         <h2>Thông tin vé</h2>
         <p>Vé xem buổi trình diễn Huyền Sử Yết Kiêu - Rối nước kết hợp 3D Mapping có thể mua tại đây!</p>
-        <a class="btn" href="ve.html">Vé xem</a>
+        <a class="btn" href="het-ve.html">Đặt vé</a>
       </div>
     </section>
 

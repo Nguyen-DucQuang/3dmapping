@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tạm hết vé - Huyền sử Yết Kiêu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #050827;
+      --deep: #020414;
+      --cyan: #18f8ff;
+      --pink: #ff0b78;
+      --white: #fff;
+      --muted: #dce3f6;
+      --max: 1040px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: "Be Vietnam Pro", Arial, sans-serif;
+      color: var(--white);
+      background:
+        linear-gradient(180deg, rgba(5, 8, 39, 0.92), rgba(2, 4, 20, 0.98)),
+        url("assets/hero-wave-background-matched.png") center bottom / 100% auto no-repeat,
+        var(--deep);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .shell {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      background: linear-gradient(180deg, #080c83 0%, #060735 100%);
+    }
+
+    .nav {
+      min-height: 94px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img:first-child {
+      width: 86px;
+      filter: drop-shadow(0 0 10px rgba(24, 248, 255, 0.35));
+    }
+
+    .brand img:last-child {
+      width: 96px;
+      filter: drop-shadow(0 0 10px rgba(255, 11, 120, 0.35));
+    }
+
+    .led-line {
+      height: 4px;
+      background: linear-gradient(90deg, #1cff2a 0%, #ecff1d 20%, #28ff70 37%, #15f9ff 56%, #ffa33d 76%, #ff0b78 100%);
+      box-shadow: 0 0 10px rgba(24, 248, 255, 0.45), 0 0 18px rgba(255, 11, 120, 0.25);
+    }
+
+    .nav-link {
+      font-size: 15px;
+      font-weight: 800;
+      color: #eef3ff;
+    }
+
+    main {
+      min-height: calc(100vh - 98px);
+      display: grid;
+      place-items: center;
+      padding: 72px 0 120px;
+    }
+
+    .notice {
+      width: min(720px, 100%);
+      text-align: center;
+    }
+
+    .notice-logo {
+      width: 210px;
+      margin: 0 auto 26px;
+      filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.38));
+    }
+
+    .notice h1 {
+      margin: 0 0 18px;
+      color: var(--cyan);
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .notice p {
+      max-width: 620px;
+      margin: 0 auto 32px;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.8;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      min-width: 190px;
+      padding: 0 28px;
+      border-radius: 999px;
+      background: var(--pink);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 900;
+      box-shadow: 0 14px 34px rgba(255, 11, 120, 0.28);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: #ff2b91;
+    }
+
+    .btn.secondary {
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: none;
+    }
+
+    .btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        min-height: 84px;
+      }
+
+      .brand img:first-child {
+        width: 70px;
+      }
+
+      .brand img:last-child {
+        width: 82px;
+      }
+
+      main {
+        padding: 56px 0 96px;
+      }
+
+      .notice-logo {
+        width: 170px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Điều hướng chính">
+      <a class="brand" href="index.html" aria-label="3D Mapping Huyền sử Yết Kiêu">
+        <img src="assets/logo-3d-mapping.png" alt="3D Mapping" />
+        <img src="assets/title-yet-kieu.png" alt="Huyền sử Yết Kiêu" />
+      </a>
+      <a class="nav-link" href="ve.html">Quay lại trang vé</a>
+    </nav>
+    <div class="led-line"></div>
+  </header>
+
+  <main>
+    <section class="notice shell" aria-labelledby="sold-out-title">
+      <img class="notice-logo" src="assets/title-yet-kieu.png" alt="Huyền sử Yết Kiêu" />
+      <h1 id="sold-out-title">Vé đang tạm hết</h1>
+      <p>Cảm ơn bạn đã quan tâm đến buổi trình diễn Huyền Sử Yết Kiêu. Hiện tại vé đang tạm hết, vui lòng quay lại sau để cập nhật đợt mở bán tiếp theo.</p>
+      <div class="actions">
+        <a class="btn" href="ve.html">Quay lại trang vé</a>
+        <a class="btn secondary" href="index.html">Về trang chủ</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
