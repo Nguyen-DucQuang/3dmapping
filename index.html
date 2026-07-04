@@ -211,40 +211,40 @@
       position: relative;
       z-index: 4;
       display: grid;
-      grid-template-columns: minmax(360px, 1.05fr) minmax(390px, 1fr);
-      gap: 86px;
+      grid-template-columns: minmax(520px, 1.12fr) minmax(390px, 0.88fr);
+      gap: 54px;
       align-items: center;
     }
 
     .hero-art {
       position: relative;
-      min-height: 390px;
-      transform: translateX(-36px);
+      min-height: 540px;
+      transform: translateX(-32px);
     }
 
     .hero-art .mountain {
       position: absolute;
-      left: 12%;
-      top: -34px;
-      width: 120%;
+      left: -22%;
+      top: -98px;
+      width: 390%;
       opacity: 0.9;
       filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.32));
     }
 
     .hero-art .boy {
       position: absolute;
-      left: 31%;
-      bottom: 46px;
-      width: 48%;
+      left: 28%;
+      bottom: 64px;
+      width: 62%;
       z-index: 2;
       filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.5));
     }
 
     .hero-art .lotus {
       position: absolute;
-      left: 0;
-      bottom: 20px;
-      width: 34%;
+      left: -6%;
+      bottom: 32px;
+      width: 44%;
       z-index: 3;
       filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.36));
     }
@@ -574,7 +574,29 @@
       }
 
       .hero-art {
+        width: min(560px, calc(100vw - 32px));
+        min-height: 500px;
+        justify-self: center;
         transform: none;
+      }
+
+      .hero-art .mountain {
+        left: 50%;
+        top: -136px;
+        width: 320%;
+        transform: translateX(-50%);
+      }
+
+      .hero-art .boy {
+        left: 50%;
+        width: 64%;
+        transform: translateX(-45%);
+      }
+
+      .hero-art .lotus {
+        left: 50%;
+        width: 44%;
+        transform: translateX(-145%);
       }
 
       .hero-copy p,
@@ -637,14 +659,34 @@
       }
 
       .hero {
-        padding-top: 30px;
-        overflow: visible;
+        padding-top: 18px;
+        overflow: hidden;
       }
 
       .hero-grid,
       .story-grid {
         justify-items: center;
         width: min(100% - 28px, var(--max));
+      }
+
+      .hero-grid {
+        row-gap: 10px;
+        overflow: hidden;
+      }
+
+      .hero-copy {
+        width: 100%;
+        max-width: calc(100vw - 32px);
+        margin: 0 auto;
+        padding: 0 4px;
+        overflow: hidden;
+      }
+
+      .hero-copy h1,
+      .hero-copy p {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-break: normal;
       }
 
       .hero::after {
@@ -656,31 +698,32 @@
       }
 
       .hero-art {
-        min-height: 350px;
-        width: min(330px, calc(100vw - 28px));
+        min-height: 420px;
+        width: min(430px, calc(100vw - 28px));
         justify-self: center;
-        margin: 0 auto;
+        margin: 54px auto -6px;
+        transform: none;
       }
 
       .hero-art .mountain {
-        width: 118%;
+        width: 292%;
         left: 50%;
-        top: -18px;
+        top: -70px;
         transform: translateX(-50%);
       }
 
       .hero-art .boy {
-        width: 56%;
+        width: 68%;
         left: 50%;
-        bottom: 34px;
-        transform: translateX(-45%);
+        bottom: 10px;
+        transform: translateX(-50%);
       }
 
       .hero-art .lotus {
-        width: 36%;
-        left: 50%;
-        bottom: 18px;
-        transform: translateX(-145%);
+        width: 44%;
+        left: 34%;
+        bottom: -6px;
+        transform: translateX(-50%);
       }
 
       .white-story {
@@ -755,15 +798,15 @@
       <div class="shell hero-grid">
         <div class="hero-art" aria-hidden="true">
           <img class="mountain" src="assets/mountain-water.png" alt="" />
-          <img class="boy" src="assets/boy-raft.png" alt="" />
-          <img class="lotus" src="assets/lotus.png" alt="" />
+          
+          
         </div>
         <div class="hero-copy">
-          <h1>Giới thiệu về Vở diễn nghệ thuật "Huyền sử Yết Kiêu"</h1>
-          <p>✨ “Huyền sử Yết Kiêu” là vở diễn nghệ thuật tái hiện huyền thoại về vị anh hùng dân tộc Yết Kiêu trên sân khấu thủy đình mộc mạc, nơi mặt nước, tre, gỗ và kiến trúc truyền thống hòa quyện cùng công nghệ trình chiếu 3D Mapping, ánh sáng và âm nhạc, tạo nên một không gian sân khấu vừa đậm hồn Việt vừa giàu tính đương đại.
-✨ Bằng sự kết hợp giữa nghệ thuật biểu diễn truyền thống và công nghệ trình chiếu 3D Mapping, vở diễn đưa khán giả ngược dòng thời gian với những tái hiện sông nước, chiến thuyền, trận thủy chiến và những truyền thuyết về Yết Kiêu một cách chân thực, mở ra không gian huyền sử đầy huyền ảo và cảm xúc.
-🌟 Với thời lượng 30 phút, “Huyền sử Yết Kiêu” mang đến một trải nghiệm mới mẻ, nơi lịch sử được kể bằng hình ảnh, âm thanh và công nghệ. Không chỉ tôn vinh tinh thần yêu nước, lòng quả cảm và trí tuệ của người Việt, vở diễn còn góp phần lan tỏa giá trị văn hóa dân tộc bằng một ngôn ngữ nghệ thuật hiện đại, tạo nên điểm nhấn độc đáo dành cho khán giả trong nước và quốc tế.</p>
-          <a class="btn" href="#experience">Khám phá ngay</a>
+          <h1>Giới thiệu về Vở diễn nghệ thuật “Huyền sử Yết Kiêu”</h1>
+          <p>✨ “Huyền sử Yết Kiêu” là vở diễn nghệ thuật tái hiện huyền thoại về vị anh hùng dân tộc Yết Kiêu trên sân khấu thủy đình mộc mạc, nơi mặt nước, tre, gỗ và kiến trúc truyền thống hòa quyện cùng công nghệ trình chiếu 3D Mapping, ánh sáng và âm nhạc, tạo nên một không gian sân khấu vừa đậm hồn Việt vừa giàu tính đương đại.</p>
+          <p>✨ Bằng sự kết hợp giữa nghệ thuật biểu diễn truyền thống và công nghệ trình chiếu 3D Mapping, vở diễn đưa khán giả ngược dòng thời gian với những tái hiện sông nước, chiến thuyền, trận thủy chiến và những truyền thuyết về Yết Kiêu một cách chân thực, mở ra không gian huyền sử đầy huyền ảo và cảm xúc.</p>
+          <p>🌟 Với thời lượng 30 phút, “Huyền sử Yết Kiêu” mang đến một trải nghiệm mới mẻ, nơi lịch sử được kể bằng hình ảnh, âm thanh và công nghệ. Không chỉ tôn vinh tinh thần yêu nước, lòng quả cảm và trí tuệ của người Việt, vở diễn còn góp phần lan tỏa giá trị văn hóa dân tộc bằng một ngôn ngữ nghệ thuật hiện đại, tạo nên điểm nhấn độc đáo dành cho khán giả trong nước và quốc tế.</p>
+          <a class="btn" href="#experience">Đặt vé ngay</a>
         </div>
       </div>
     </section>
@@ -772,8 +815,8 @@
       <div class="shell story-grid">
         <div class="story-copy">
           <h2>Tôn vinh bản sắc Việt bằng ngôn ngữ sân khấu đương đại.</h2>
-          <p>Khám phá câu chuyện hào hùng về Yết Kiêu Vị anh hùng thủy chiến kiệt xuất thời nhà Trần, người góp phần làm nên chiến thắng chống quân Nguyên Mông trên sông nước Đại Việt.</p>
-          <a class="btn" href="het-ve.html">Đặt vé</a>
+          <p>Trên sân khấu thủy đình mộc mạc, nơi mặt nước trở thành sân khấu, ánh sáng trở thành ngôn ngữ và công nghệ 3D Mapping mở ra những không gian huyền sử kỳ vĩ,</p>
+          
         </div>
         <img class="story-image" src="assets/performance-scene.png" alt="Sân khấu rối nước kết hợp 3D Mapping" />
       </div>
